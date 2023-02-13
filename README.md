@@ -4,29 +4,6 @@
 __R=__ Porque elas interrompem a execução do código e impedem que outros usuários interajam com o sistema.  Isso pode levar a um comportamento lento e instável do sistema é recomendado usar chamadas de I/O não-bloqueantes ou usar técnicas como o callback ou promessas para lidar com a chamada de I/O de forma assíncrona
 
 
-### 3) Crie uma função chamada searchUsers que aceite uma_ string como parâmetro (nome do usuário que será procurado).Dentro da função, use a API de usuários do GitHub para procurar pelo usuário com o nome informado. Use a função fetch do JavaScript para fazer uma requisição à API do GitHub usando o endpoint < https://api.github.com/search/users?q=<STR>, que retorna um array chamado items contendo a lista de usuários do GitHub cujos nomes começam com a string STR. A
-resposta da API é retornada como uma Promise, então será preciso usar await para lidar com a resposta. Se o array items não existir na resposta, então sua Promise deverá ser rejeitada e deverá retornar uma mensagem de erro. Se o array items existir na resposta, então você deve procurar nesse array pelo usuário com o nome exatamente igual ao passado para a função searchUsers. Se você encontrar o usuário, sua Promise deverá retorna true. Caso contrário, deverá retornar false. Adicione async à declaração da função para permitir o uso de await. Teste a função passando o nome de um usuário como argumento e verifique se a Promise é resolvida corretamente, returnando true ou false ou uma mensagem de erro.
-__R=__ 
-~~~javascript
-async function searchUsers(username) {
-    const response = await fetch(`https://api.github.com/search/users?q=${username}`);
-    const data = await response.json();
-    if (!data.items) {
-      return Promise.reject("Erro: items não encontrado na resposta da API");
-    }
-    const user = data.items.find(user => user.login === username);
-    return user ? true : false;
-  }
-  
-  searchUsers("<username>")
-  .then(result => {
-    console.log(result);
-  })
-  .catch(error => {
-    console.error(error);
-  });
-~~~
-
 ### __2) O que é callback hell e como evitá-los através do uso de Promises e async/await? Mostre exemplos de códigos onde o uso de Promises e async/await resolva o problema do callback hell.__
 
 __R=__ Encadeamento de várias operações assíncronas e acaba com uma série de callbacks aninhados, dificultando a leitura e manutenção do código. Isso pode levar a um código difícil de entender e manter, além de ser propenso a erros. Com Promise um valor resposta poderá estar disponível agora, no futuro ou nunca. Podendo encadear várias Promises juntas, tornando o código mais fácil de ler e manter. Com async/await Ao invés de encadear vários callbacks, você pode escrever código assíncrono usando a palavra-chave await, que espera por uma Promise ser resolvida antes de continuar com a execução.
@@ -111,6 +88,30 @@ function doTask1(callback) {
   
   runTasks();
 ~~~
+
+### 3) Crie uma função chamada searchUsers que aceite uma_ string como parâmetro (nome do usuário que será procurado).Dentro da função, use a API de usuários do GitHub para procurar pelo usuário com o nome informado. Use a função fetch do JavaScript para fazer uma requisição à API do GitHub usando o endpoint < https://api.github.com/search/users?q=<STR>, que retorna um array chamado items contendo a lista de usuários do GitHub cujos nomes começam com a string STR. A
+resposta da API é retornada como uma Promise, então será preciso usar await para lidar com a resposta. Se o array items não existir na resposta, então sua Promise deverá ser rejeitada e deverá retornar uma mensagem de erro. Se o array items existir na resposta, então você deve procurar nesse array pelo usuário com o nome exatamente igual ao passado para a função searchUsers. Se você encontrar o usuário, sua Promise deverá retorna true. Caso contrário, deverá retornar false. Adicione async à declaração da função para permitir o uso de await. Teste a função passando o nome de um usuário como argumento e verifique se a Promise é resolvida corretamente, returnando true ou false ou uma mensagem de erro.
+__R=__ 
+~~~javascript
+async function searchUsers(username) {
+    const response = await fetch(`https://api.github.com/search/users?q=${username}`);
+    const data = await response.json();
+    if (!data.items) {
+      return Promise.reject("Erro: items não encontrado na resposta da API");
+    }
+    const user = data.items.find(user => user.login === username);
+    return user ? true : false;
+  }
+  
+  searchUsers("<username>")
+  .then(result => {
+    console.log(result);
+  })
+  .catch(error => {
+    console.error(error);
+  });
+~~~
+
 
 ### __4) Quais são as diferenças entre frameworks opinativos e não opinativos? Em qual dessas classes o framework Express melhor se encaixa?__
 __R=__ Frameworks opinativos: Determinam como as coisas devem ser feitas e fornecem um conjunto completo de recursos e ferramentas para seguir essas diretrizes. Eles tendem a ser mais rápidos e fáceis de aprender e usar, mas também são mais limitantes em termos de flexibilidade e personalização. Exemplos de frameworks opinativos incluem Ruby on Rails e Django.
